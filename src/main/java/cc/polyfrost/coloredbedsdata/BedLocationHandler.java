@@ -145,8 +145,9 @@ public class BedLocationHandler {
                 for (Map.Entry<Integer, EnumDyeColor> entry : worldBedColors.entrySet()) {
                     int color = bedLocations[entry.getKey()];
                     if (!Objects.equals(Objects.equals(entry.getValue().getDyeColorName(), "cyan") ? "aqua" : entry.getValue().getDyeColorName(), COLORS_REVERSE.get(color))) {
-                        UChat.chat(ChatColor.RED + "Bed color mismatch: " + (Objects.equals(entry.getValue().getDyeColorName(), "cyan") ? "aqua" : entry.getValue().getDyeColorName()) + " != " + COLORS_REVERSE.get(color));
-
+                        UChat.chat(ChatColor.RED + "Bed color mismatch: " +
+                                (Objects.equals(entry.getValue().getDyeColorName(), "cyan") ? "aqua" : entry.getValue().getDyeColorName()) +
+                                " != " + COLORS_REVERSE.get(color));
                     }
                 }
             }

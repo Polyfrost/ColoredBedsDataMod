@@ -1,14 +1,14 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import cc.polyfrost.gradle.util.noServerRunConfigs
+import org.polyfrost.gradle.util.noServerRunConfigs
 
 plugins {
     kotlin("jvm")
-    id("cc.polyfrost.multi-version")
-    id("cc.polyfrost.defaults.repo")
-    id("cc.polyfrost.defaults.java")
-    id("cc.polyfrost.defaults.loom")
+    id("org.polyfrost.multi-version")
+    id("org.polyfrost.defaults.repo")
+    id("org.polyfrost.defaults.java")
+    id("org.polyfrost.defaults.loom")
     id("com.github.johnrengelman.shadow")
-    id("net.kyori.blossom") version "1.3.0"
+    id("net.kyori.blossom") version "1.3.2"
     id("signing")
     java
 }
@@ -17,9 +17,6 @@ val mod_name: String by project
 val mod_version: String by project
 val mod_id: String by project
 
-preprocess {
-    vars.put("MODERN", if (project.platform.mcMinor >= 16) 1 else 0)
-}
 
 blossom {
     replaceToken("@VER@", mod_version)
@@ -36,8 +33,8 @@ base {
 loom {
     noServerRunConfigs()
     if (project.platform.isLegacyForge) {
-        launchConfigs.named("client") {
-            arg("--tweakClass", "cc.polyfrost.oneconfigwrapper.OneConfigWrapper")
+        runConfigs.named("client") {
+            programArgs("--tweakClass", "cc.polyfrost.oneconfigwrapper.OneConfigWrapper")
             property("mixin.debug.export", "true")
         }
     }
@@ -58,14 +55,14 @@ repositories {
 }
 
 dependencies {
-    modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.0-alpha+")
+    modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.2-alpha+")
 
     if (platform.isLegacyForge) {
-        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-alpha+")
+        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta17")
     }
     modRuntimeOnly("me.djtheredstoner:DevAuth-" +
             (if (platform.isForge) { if (platform.isLegacyForge) "forge-legacy" else "forge-latest" } else "fabric")
-            + ":1.1.0")
+            + ":1.2.0")
 }
 
 tasks.processResources {
