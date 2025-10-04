@@ -59,7 +59,7 @@ public class BedLocationHandler {
     }
 
     public void initialize() {
-        Multithreading.runAsync(() -> locations = NetworkUtils.getJsonElement("https://data.woverflow.cc/bed_locations.json").getAsJsonObject());
+        Multithreading.runAsync(() -> locations = NetworkUtils.getJsonElement("https://data.polyfrost.org/bed_locations.json").getAsJsonObject());
     }
 
     private int[] processColors(JsonArray array) {
